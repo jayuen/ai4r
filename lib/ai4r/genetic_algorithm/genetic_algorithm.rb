@@ -38,11 +38,10 @@ module Ai4r
       attr_accessor :population
 
 
-      def initialize(initial_population_size, generations, chromosome_class=Chromosome)
+      def initialize(initial_population_size, generations)
         @population_size = initial_population_size
         @max_generation = generations
         @generation = 0
-        @chromosome_class = chromosome_class
       end
 
       #     1. Choose initial population
@@ -68,7 +67,7 @@ module Ai4r
       def generate_initial_population
        @population = []
        @population_size.times do
-         population << @chromosome_class.seed
+         population << Chromosome.seed
        end
       end
 
@@ -119,10 +118,10 @@ module Ai4r
       def reproduction(selected_to_breed)
         offsprings = []
         0.upto(selected_to_breed.length/2-1) do |i|
-          offsprings << @chromosome_class.reproduce(selected_to_breed[2*i], selected_to_breed[2*i+1])
+          offsprings << Chromosome.reproduce(selected_to_breed[2*i], selected_to_breed[2*i+1])
         end
         @population.each do |individual|
-          @chromosome_class.mutate(individual)
+          Chromosome.mutate(individual)
         end
         return offsprings
       end
